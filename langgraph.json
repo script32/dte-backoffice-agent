@@ -1,0 +1,7 @@
+{
+  "dependencies": ["."],
+  "graphs": {
+    "dte_backoffice": "./src/dte_agent/studio.py:graph"
+  },
+  "env": ".env"
+}

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Documento de EJEMPLO con datos ficticios. Estructura según formato DTE del SII. -->
+<EnvioDTE xmlns="http://www.sii.cl/SiiDte" version="1.0">
+ <SetDTE ID="SetDoc">
+  <DTE version="1.0">
+    <Documento ID="F1520T33">
+      <Encabezado>
+        <IdDoc>
+          <TipoDTE>33</TipoDTE>
+          <Folio>1520</Folio>
+          <FchEmis>2026-09-15</FchEmis>
+          <FmaPago>2</FmaPago>
+        </IdDoc>
+        <Emisor>
+          <RUTEmisor>77111222-6</RUTEmisor>
+          <RznSoc>Nube Austral SpA</RznSoc>
+          <GiroEmis>Servicios de hosting y cloud</GiroEmis>
+          <Acteco>620200</Acteco>
+          <DirOrigen>Av. Ejemplo 123</DirOrigen>
+          <CmnaOrigen>Puerto Montt</CmnaOrigen>
+        </Emisor>
+        <Receptor>
+          <RUTRecep>76543210-3</RUTRecep>
+          <RznSocRecep>Comercial Los Lagos SpA</RznSocRecep>
+          <GiroRecep>Comercialización de productos</GiroRecep>
+          <DirRecep>Calle Ficticia 456</DirRecep>
+          <CmnaRecep>Puerto Varas</CmnaRecep>
+        </Receptor>
+        <Totales>
+          <MntNeto>85000</MntNeto>
+          <TasaIVA>19</TasaIVA>
+          <IVA>16150</IVA>
+          <MntTotal>101150</MntTotal>
+        </Totales>
+      </Encabezado>
+      <Detalle>
+        <NroLinDet>1</NroLinDet>
+        <NmbItem>Plan hosting empresarial - septiembre</NmbItem>
+        <QtyItem>1</QtyItem>
+        <PrcItem>70000</PrcItem>
+        <MontoItem>70000</MontoItem>
+      </Detalle>
+      <Detalle>
+        <NroLinDet>2</NroLinDet>
+        <NmbItem>Renovación dominio .cl</NmbItem>
+        <QtyItem>1</QtyItem>
+        <PrcItem>15000</PrcItem>
+        <MontoItem>15000</MontoItem>
+      </Detalle>
+    </Documento>
+  </DTE>
+ </SetDTE>
+</EnvioDTE>

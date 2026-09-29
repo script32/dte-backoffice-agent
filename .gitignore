@@ -1,0 +1,14 @@
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.data/
+.langgraph_api/
+# Configuración y datos propios de cada empresa: nunca al repo
+config.yaml
+data/plan_de_cuentas.csv
+data/entrada/
+# Contexto local para Claude Code: no se versiona
+CLAUDE.md
+.remember/

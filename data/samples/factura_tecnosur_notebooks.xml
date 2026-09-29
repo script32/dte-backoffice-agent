@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Documento de EJEMPLO con datos ficticios. Estructura según formato DTE del SII. -->
+<EnvioDTE xmlns="http://www.sii.cl/SiiDte" version="1.0">
+ <SetDTE ID="SetDoc">
+  <DTE version="1.0">
+    <Documento ID="F88341T33">
+      <Encabezado>
+        <IdDoc>
+          <TipoDTE>33</TipoDTE>
+          <Folio>88341</Folio>
+          <FchEmis>2026-09-20</FchEmis>
+          <FmaPago>2</FmaPago>
+        </IdDoc>
+        <Emisor>
+          <RUTEmisor>76888999-6</RUTEmisor>
+          <RznSoc>TecnoSur Limitada</RznSoc>
+          <GiroEmis>Venta de equipos computacionales</GiroEmis>
+          <Acteco>620200</Acteco>
+          <DirOrigen>Av. Ejemplo 123</DirOrigen>
+          <CmnaOrigen>Puerto Montt</CmnaOrigen>
+        </Emisor>
+        <Receptor>
+          <RUTRecep>76543210-3</RUTRecep>
+          <RznSocRecep>Comercial Los Lagos SpA</RznSocRecep>
+          <GiroRecep>Comercialización de productos</GiroRecep>
+          <DirRecep>Calle Ficticia 456</DirRecep>
+          <CmnaRecep>Puerto Varas</CmnaRecep>
+        </Receptor>
+        <Totales>
+          <MntNeto>1450000</MntNeto>
+          <TasaIVA>19</TasaIVA>
+          <IVA>275500</IVA>
+          <MntTotal>1725500</MntTotal>
+        </Totales>
+      </Encabezado>
+      <Detalle>
+        <NroLinDet>1</NroLinDet>
+        <NmbItem>Notebook 14 pulgadas 16GB RAM 512GB SSD</NmbItem>
+        <QtyItem>2</QtyItem>
+        <PrcItem>725000</PrcItem>
+        <MontoItem>1450000</MontoItem>
+      </Detalle>
+    </Documento>
+  </DTE>
+ </SetDTE>
+</EnvioDTE>

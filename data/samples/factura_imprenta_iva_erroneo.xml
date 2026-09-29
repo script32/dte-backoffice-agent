@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Documento de EJEMPLO con datos ficticios. Estructura según formato DTE del SII. -->
+<EnvioDTE xmlns="http://www.sii.cl/SiiDte" version="1.0">
+ <SetDTE ID="SetDoc">
+  <DTE version="1.0">
+    <Documento ID="F4410T33">
+      <Encabezado>
+        <IdDoc>
+          <TipoDTE>33</TipoDTE>
+          <Folio>4410</Folio>
+          <FchEmis>2026-09-22</FchEmis>
+          <FmaPago>2</FmaPago>
+        </IdDoc>
+        <Emisor>
+          <RUTEmisor>78222333-K</RUTEmisor>
+          <RznSoc>Imprenta Reloncaví SpA</RznSoc>
+          <GiroEmis>Imprenta y servicios gráficos</GiroEmis>
+          <Acteco>620200</Acteco>
+          <DirOrigen>Av. Ejemplo 123</DirOrigen>
+          <CmnaOrigen>Puerto Montt</CmnaOrigen>
+        </Emisor>
+        <Receptor>
+          <RUTRecep>76543210-3</RUTRecep>
+          <RznSocRecep>Comercial Los Lagos SpA</RznSocRecep>
+          <GiroRecep>Comercialización de productos</GiroRecep>
+          <DirRecep>Calle Ficticia 456</DirRecep>
+          <CmnaRecep>Puerto Varas</CmnaRecep>
+        </Receptor>
+        <Totales>
+          <MntNeto>120000</MntNeto>
+          <TasaIVA>19</TasaIVA>
+          <IVA>22000</IVA>
+          <MntTotal>142000</MntTotal>
+        </Totales>
+      </Encabezado>
+      <Detalle>
+        <NroLinDet>1</NroLinDet>
+        <NmbItem>Pendones publicitarios 2x1 m</NmbItem>
+        <QtyItem>4</QtyItem>
+        <PrcItem>30000</PrcItem>
+        <MontoItem>120000</MontoItem>
+      </Detalle>
+    </Documento>
+  </DTE>
+ </SetDTE>
+</EnvioDTE>

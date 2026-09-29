@@ -1,0 +1,28 @@
+# Copia este archivo a config.yaml y reemplaza con los datos de tu empresa.
+empresa:
+  rut: "76.543.210-3"
+  razon_social: "Comercial Los Lagos SpA"
+
+politicas:
+  # Sobre este monto total (CLP) siempre se pide aprobación humana
+  umbral_aprobacion: 1000000
+  # Bajo esta confianza de categorización se pide aprobación humana
+  confianza_minima: 0.8
+  # La primera factura de un proveedor siempre la revisa una persona
+  revisar_proveedor_nuevo: true
+  # Documentos más antiguos que esto generan una advertencia
+  dias_antiguedad_max: 60
+
+categorizacion:
+  plan_de_cuentas: data/plan_de_cuentas.example.csv
+  # Modelo para categorizar cuando no hay historial ni reglas. null = sin LLM.
+  modelo_llm: "anthropic:claude-sonnet-5-5"
+  # Reglas deterministas: se evalúan antes que el LLM
+  reglas:
+    - rut_emisor: "77.111.222-6"
+      cuenta: "5104"
+    - palabra_clave: "arriendo"
+      cuenta: "5101"
+
+almacenamiento:
+  directorio: .data
