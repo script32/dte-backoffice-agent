@@ -38,7 +38,7 @@ flowchart TD
 ```
 
 1. **Lee** DTE sueltos o `EnvioDTE` con varios documentos (facturas 33 y 34, notas de crédito 61 y de débito 56).
-2. **Valida** con reglas deterministas: dígito verificador de RUT, que el receptor sea la empresa, IVA contra la tasa, cuadratura de totales y detalle, fechas futuras o antiguas, duplicados por emisor + tipo + folio.
+2. **Valida** con reglas deterministas: dígito verificador de RUT, que el receptor sea la empresa, IVA contra la tasa, cuadratura del total según la fórmula oficial del SII (impuestos adicionales, garantía por envases, crédito a constructoras) y del detalle con descuentos y recargos globales, fechas futuras o antiguas, duplicados por emisor + tipo + folio.
 3. **Categoriza** en el plan de cuentas de la empresa, en cascada: primero repite la cuenta usada antes con ese proveedor, luego aplica reglas configuradas y solo si nada de eso resuelve, consulta a un LLM.
 4. **Decide** con políticas configurables si puede registrar solo o necesita a una persona.
 5. **Pausa** con `interrupt()` de LangGraph cuando hace falta aprobación; el estado queda persistido y el flujo se reanuda días después si es necesario, desde la API o la CLI.

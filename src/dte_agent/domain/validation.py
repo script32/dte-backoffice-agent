@@ -12,6 +12,26 @@ def _redondear(valor: float) -> int:
     return int(valor + 0.5)
 
 
+def _base_desde_detalle(f: Factura) -> int:
+    """Neto + exento reconstruido desde las líneas y los descuentos o recargos globales.
+
+    Solo cuentan las líneas afectas (sin IndExe) y exentas (IndExe=1); las no facturables y la
+    garantía por envases (IndExe=3) no forman parte de la base.
+    """
+    bases = {None: 0, 1: 0}
+    for linea in f.lineas:
+        if linea.indicador_exencion in bases:
+            bases[linea.indicador_exencion] += linea.monto
+    ajustes = dict.fromkeys(bases, 0)
+    for dr in f.descuentos_recargos:
+        if dr.indicador_exencion not in bases:
+            continue
+        monto = bases[dr.indicador_exencion] * dr.valor / 100 if dr.tipo_valor == "%" else dr.valor
+        signo = -1 if dr.tipo_movimiento == "D" else 1
+        ajustes[dr.indicador_exencion] += signo * _redondear(monto)
+    return sum(bases.values()) + sum(ajustes.values())
+
+
 def validar(
     factura: Factura, rut_empresa: str, hoy: date, dias_antiguedad_max: int = 60
 ) -> list[Hallazgo]:
@@ -47,22 +67,31 @@ def validar(
                 f"(esperado {clp(esperado)})",
             )
 
-    total_calculado = f.monto_neto + f.monto_exento + f.iva + f.otros_impuestos
+    # Formato DTE del SII, campo 124 (MntTotal). Las retenciones de IVA solo restan en
+    # facturas de compra (tipo 46), que el receptor no recibe de un proveedor.
+    total_calculado = (
+        f.monto_neto
+        + f.monto_exento
+        + f.iva
+        + f.otros_impuestos
+        + f.garantia_envases
+        - f.credito_constructoras
+    )
     if abs(total_calculado - f.monto_total) > TOLERANCIA:
         error(
             "total_incorrecto",
             f"Monto total {clp(f.monto_total)} no cuadra con neto + exento + impuestos "
-            f"({clp(total_calculado)})",
+            f"+ garantía de envases - crédito constructoras ({clp(total_calculado)})",
         )
 
     if f.lineas:
-        suma_lineas = sum(linea.monto for linea in f.lineas)
+        base_detalle = _base_desde_detalle(f)
         base = f.monto_neto + f.monto_exento
-        if abs(suma_lineas - base) > TOLERANCIA:
+        if abs(base_detalle - base) > TOLERANCIA:
             advertencia(
                 "detalle_no_cuadra",
-                f"La suma del detalle ({clp(suma_lineas)}) difiere de neto + exento "
-                f"({clp(base)}); puede deberse a descuentos o recargos globales",
+                f"El detalle con descuentos y recargos globales suma {clp(base_detalle)}, "
+                f"distinto de neto + exento ({clp(base)})",
             )
 
     if f.fecha_emision > hoy:

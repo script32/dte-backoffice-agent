@@ -29,6 +29,20 @@ class LineaDetalle(BaseModel):
     cantidad: float | None = None
     precio_unitario: float | None = None
     monto: int
+    # IndExe del SII: 1 exento, 2 no facturable, 3 garantía por envases, etc. None = afecto
+    indicador_exencion: int | None = None
+
+
+class DescuentoRecargo(BaseModel):
+    """Descuento o recargo global (<DscRcgGlobal>): modifica la base, no una línea."""
+
+    numero: int
+    tipo_movimiento: Literal["D", "R"]
+    glosa: str | None = None
+    tipo_valor: Literal["%", "$"]
+    valor: float
+    # IndExeDR: None = afecta ítems afectos, 1 = exentos, 2 = no facturables
+    indicador_exencion: int | None = None
 
 
 class Factura(BaseModel):
@@ -46,8 +60,11 @@ class Factura(BaseModel):
     tasa_iva: float | None = None
     iva: int = 0
     otros_impuestos: int = 0
+    credito_constructoras: int = 0  # <CredEC>: se resta del total
+    garantia_envases: int = 0  # <GrntDep>: se suma al total
     monto_total: int
     lineas: list[LineaDetalle] = Field(default_factory=list)
+    descuentos_recargos: list[DescuentoRecargo] = Field(default_factory=list)
 
     @property
     def tipo_nombre(self) -> str:

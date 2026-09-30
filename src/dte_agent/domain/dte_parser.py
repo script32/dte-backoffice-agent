@@ -10,7 +10,7 @@ from xml.etree.ElementTree import Element, tostring
 from defusedxml.ElementTree import fromstring
 from pydantic import ValidationError
 
-from .models import Factura, LineaDetalle
+from .models import DescuentoRecargo, Factura, LineaDetalle
 from .rut import normalizar
 
 
@@ -48,6 +48,11 @@ def _int(el: Element, ruta: str, default: int = 0) -> int:
 def _float(el: Element, ruta: str) -> float | None:
     valor = _txt(el, ruta, requerido=False)
     return float(valor) if valor else None
+
+
+def _int_opcional(el: Element, ruta: str) -> int | None:
+    valor = _txt(el, ruta, requerido=False)
+    return int(valor) if valor else None
 
 
 def _seccion(padre: Element, nombre: str) -> Element:
@@ -91,6 +96,8 @@ def parsear_documento(xml: str) -> Factura:
             tasa_iva=_float(totales, "TasaIVA"),
             iva=_int(totales, "IVA"),
             otros_impuestos=sum(_int(i, "MontoImp") for i in totales.findall("ImptoReten")),
+            credito_constructoras=_int(totales, "CredEC"),
+            garantia_envases=_int(totales, "GrntDep"),
             monto_total=_int(totales, "MntTotal"),
             lineas=[
                 LineaDetalle(
@@ -99,8 +106,20 @@ def parsear_documento(xml: str) -> Factura:
                     cantidad=_float(d, "QtyItem"),
                     precio_unitario=_float(d, "PrcItem"),
                     monto=_int(d, "MontoItem"),
+                    indicador_exencion=_int_opcional(d, "IndExe"),
                 )
                 for d in doc.findall("Detalle")
+            ],
+            descuentos_recargos=[
+                DescuentoRecargo(
+                    numero=_int(dr, "NroLinDR"),
+                    tipo_movimiento=_txt(dr, "TpoMov"),
+                    glosa=_txt(dr, "GlosaDR", requerido=False),
+                    tipo_valor=_txt(dr, "TpoValor"),
+                    valor=_float(dr, "ValorDR") or 0,
+                    indicador_exencion=_int_opcional(dr, "IndExeDR"),
+                )
+                for dr in doc.findall("DscRcgGlobal")
             ],
         )
     except ErrorDTE:
